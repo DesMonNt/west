@@ -7,7 +7,6 @@ const Game = function() {
         this.topPlayerStartDeck = topPlayerDeck;
     }
 
-    // Подготавливает колоды, создает игроков, запускает игру.
     Game.prototype.play = function (needShuffleDecks, onGameOver) {
         const bottomPlayerDeck = needShuffleDecks
             ? copyAndShuffle(this.bottomPlayerStartDeck)
@@ -37,8 +36,6 @@ const Game = function() {
         playStaged(this, 0, onGameOver);
     };
 
-    // Выполняет действия для некоторой стадии хода.
-    // Переход к следующей стадии идет через самовызов в колбэке.
     function playStaged(game, stage, onGameOver) {
         switch (stage) {
             case 0:
@@ -70,13 +67,6 @@ const Game = function() {
         }
     }
 
-    // Предоставляет картам необходимый доступ к объектам игры.
-    // Самое полезное:
-    // - currentPlayer.table - выложенные карты текущего игрока
-    // - oppositePlayer.table - выложенные карты противоположенного игрока
-    // - position - позиция текущей карты, начиная слева, считается с 0
-    // - updateView - обновляет вид всех объектов игры,
-    //   полезен когда действие некоторой карты повлияло на множество объектов
     Game.prototype.getContextForCard = function (position) {
         return {
             currentPlayer: this.currentPlayer,
@@ -86,7 +76,6 @@ const Game = function() {
         }
     };
 
-    // Обновляет вид всех объектов игры.
     Game.prototype.updateView = function () {
         this.currentPlayer.updateView();
         this.oppositePlayer.updateView();
